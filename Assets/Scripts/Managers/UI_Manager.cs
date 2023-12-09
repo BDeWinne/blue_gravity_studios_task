@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -11,8 +9,10 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] coinTexts;
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private GameObject dialogPanel;
+    [SerializeField] private GameObject tradePanel;
     [Header("Others")]
     [SerializeField] private PlayerInventory playerInventory;
+    private bool panelOpen = false;
     void Awake()
     {
         if (Instance == null)
@@ -31,7 +31,22 @@ public class UI_Manager : MonoBehaviour
     }
     public void SwitchInventory(bool state)
     {
+        if (panelOpen && state)
+        {
+            return;
+        }
+        panelOpen = state;
         inventoryPanel.SetActive(state);
+        SwitchHUD(!state);
+    }
+    public void SwitchTradeScreen(bool state)
+    {
+        if (panelOpen && state)
+        {
+            return;
+        }
+        panelOpen = state;
+        tradePanel.SetActive(state);
         SwitchHUD(!state);
     }
     void SwitchHUD(bool state)
@@ -40,6 +55,11 @@ public class UI_Manager : MonoBehaviour
     }
     public void SwitchDialogue(bool state)
     {
+        if (panelOpen && state)
+        {
+            return;
+        }
+        panelOpen = state;
         dialogPanel.SetActive(state);
     }
     public void UpdateCoinsUI()

@@ -10,6 +10,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText, nameText;
     [SerializeField] private Button nextBtn;
     [SerializeField] private GameObject optionsBtns;
+    [SerializeField] private Button acceptBtn;
     private int currentLine = 0;
     Dialogue dialogue;
 
@@ -24,7 +25,6 @@ public class DialogueManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     public async void StartDialogue(Dialogue dialogue, string name)
     {
         UI_Manager.Instance.SwitchDialogue(true);
@@ -59,7 +59,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            ConfigueOptionsBtns();
+            ActivateOptionsBtns();
         }
     }
     public void EndDialogue()
@@ -69,9 +69,17 @@ public class DialogueManager : MonoBehaviour
         optionsBtns.SetActive(false);
         dialogue = null;
     }
-    void ConfigueOptionsBtns()
+    void ActivateOptionsBtns()
     {
         optionsBtns.SetActive(true);
+    }
+    public void ConfigureAcceptBtn(NPC_Controller npc)
+    {
+        acceptBtn.onClick.AddListener(() => { EndDialogue(); npc.BuildTraderScreen(); });
+    }
+    public void RemoveAcceptBtnConfig()
+    {
+        acceptBtn.onClick.RemoveAllListeners();
     }
 }
 [Serializable]
