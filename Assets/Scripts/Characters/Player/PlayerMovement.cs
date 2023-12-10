@@ -21,6 +21,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
+        if (UI_Manager.Instance.PanelOpen)
+        {
+            rb.velocity = new Vector2(0, 0);
+            playerAnimation.UpdateAnimation(new Vector2(0, 0), lastDirection);
+            return;
+        }
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 

@@ -14,7 +14,7 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI overText;
     [Header("Others")]
     [SerializeField] private PlayerInventory playerInventory;
-    private bool panelOpen = false;
+    public bool PanelOpen { get; private set; }
     void Awake()
     {
         if (Instance == null)
@@ -37,21 +37,21 @@ public class UI_Manager : MonoBehaviour
     }
     public void SwitchInventory(bool state)
     {
-        if (panelOpen && state)
+        if (PanelOpen && state)
         {
             return;
         }
-        panelOpen = state;
+        PanelOpen = state;
         inventoryPanel.SetActive(state);
         SwitchHUD(!state);
     }
     public void SwitchTradeScreen(bool state)
     {
-        if (panelOpen && state)
+        if (PanelOpen && state)
         {
             return;
         }
-        panelOpen = state;
+        PanelOpen = state;
         tradePanel.SetActive(state);
         SwitchHUD(!state);
     }
@@ -61,11 +61,11 @@ public class UI_Manager : MonoBehaviour
     }
     public void SwitchDialogue(bool state)
     {
-        if (panelOpen && state)
+        if (PanelOpen && state)
         {
             return;
         }
-        panelOpen = state;
+        PanelOpen = state;
         dialogPanel.SetActive(state);
     }
     public void UpdateCoinsUI()

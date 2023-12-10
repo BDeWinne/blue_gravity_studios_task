@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TradePanelManager : MonoBehaviour
 {
     public static TradePanelManager Instance;
     [SerializeField] private GameObject itemSlotPrefab;
-    [SerializeField] private Transform tradeScreenTrs;
+    [SerializeField] private Transform playerTradeScreenTrs, traderTradeScreenTrs;
     private NPC_Controller currentNpc;
-    [SerializeField] private List<ItemSlot> itemSlots = new List<ItemSlot>();
     [SerializeField] private PlayerInventory playerInventory;
+    public PlayerInventory PlayerInventory => playerInventory;
+    [SerializeField] private List<ItemSlot> playerItemSlots = new List<ItemSlot>();
+    [SerializeField] private List<ItemSlot> traderItemSlots = new List<ItemSlot>();
     void Awake()
     {
         if (Instance == null)
@@ -24,35 +27,61 @@ public class TradePanelManager : MonoBehaviour
     public void BuildTradeScreen(NPC_Controller npc)
     {
         currentNpc = npc;
-        for (int i = 0; i < npc.items.Count; i++)
+        for (int i = 0; i < playerInventory.Items.Count; i++)
         {
-            GameObject itemSlot = Instantiate(itemSlotPrefab, tradeScreenTrs);
-            itemSlots.Add(itemSlot.GetComponent<ItemSlot>());
-            itemSlots[i].CreateItemSlot(npc.items[i]);
+            CreateSlot(playerTradeScreenTrs, playerItemSlots, i, playerInventory.Items[i], setSlotForSell: true);
         }
-    }
-    public void ItemHasBeenBought(Item item)
-    {
-        playerInventory.ModifyCoinsCount(item.price);
-        playerInventory.AddItem(item);
         for (int i = 0; i < currentNpc.items.Count; i++)
         {
-            if (item == currentNpc.items[i])
-            {
-                currentNpc.items.RemoveAt(i);
-            }
+            CreateSlot(traderTradeScreenTrs, traderItemSlots, i, currentNpc.items[i], setSlotForBuy: true);
+        }
+    }
+    public void ItemBought(Item item)
+    {
+        playerInventory.ModifyCoinsCount(-item.price);
+        playerInventory.AddItem(item);
+        currentNpc.RemoveItem(item);
+        CreateSlot(playerTradeScreenTrs, playerItemSlots, playerInventory.Items.Count - 1, item, setSlotForSell: true);
+    }
+    public void ItemSold(Item item)
+    {
+        playerInventory.ModifyCoinsCount(item.price);
+        playerInventory.RemoveItem(item);
+        currentNpc.AddItem(item);
+        CreateSlot(traderTradeScreenTrs, traderItemSlots, currentNpc.items.Count - 1, item, setSlotForBuy: true);
+    }
+    void CreateSlot(Transform parent, List<ItemSlot> listToAdd, int index, Item item, bool setSlotForBuy = false, bool setSlotForSell = false)
+    {
+        GameObject slot = Instantiate(itemSlotPrefab, parent);
+        listToAdd.Add(slot.GetComponent<ItemSlot>());
+        listToAdd[index].FillItemSlotData(item);
+        if (setSlotForBuy)
+        {
+            listToAdd[index].SetSlotForBuy();
+        }
+        if (setSlotForSell)
+        {
+            listToAdd[index].SetSlotForSell();
         }
     }
     public void CleanTradeScreen()
     {
-        for (int i = 0; i < itemSlots.Count; i++)
+        for (int i = 0; i < playerItemSlots.Count; i++)
         {
-            if (itemSlots[i] != null)
+            if (playerItemSlots[i] != null)
             {
-                itemSlots[i].DestroySlot();
+                playerItemSlots[i].DestroySlot();
             }
         }
-        itemSlots = new List<ItemSlot>();
+        for (int i = 0; i < traderItemSlots.Count; i++)
+        {
+            if (traderItemSlots[i] != null)
+            {
+                traderItemSlots[i].DestroySlot();
+            }
+        }
+        playerItemSlots = new List<ItemSlot>();
+        traderItemSlots = new List<ItemSlot>();
         currentNpc = null;
     }
 }

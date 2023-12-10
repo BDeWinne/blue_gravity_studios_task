@@ -16,4 +16,4 @@ MonoBehaviour:
   icon: {fileID: 639202738, guid: 3ddab80c28affd4489cdf5c894a843b4, type: 3}
   price: 200
   itemType: 0
-  clothId: 2
+  clothId: 1

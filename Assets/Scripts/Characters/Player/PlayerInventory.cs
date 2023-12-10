@@ -21,9 +21,13 @@ public class PlayerInventory : MonoBehaviour
     {
         items.Add(item);
     }
+    public void RemoveItem(Item item)
+    {
+        items.Remove(item);
+    }
     public void ModifyCoinsCount(int value)
     {
-        coins -= value;
+        coins += value;
     }
     public void SetOutfit(Item item)
     {

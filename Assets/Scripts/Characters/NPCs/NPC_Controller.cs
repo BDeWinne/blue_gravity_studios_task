@@ -15,4 +15,13 @@ public class NPC_Controller : MonoBehaviour
         TradePanelManager.Instance.BuildTradeScreen(this);
         UI_Manager.Instance.SwitchTradeScreen(true);
     }
+    public void AddItem(Item item)
+    {
+        items.Add(item);
+    }
+    public void RemoveItem(Item item)
+    {
+        items.Remove(item);
+    }
 }
+
