@@ -12,6 +12,7 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private GameObject dialogPanel;
     [SerializeField] private GameObject tradePanel;
     [SerializeField] private TextMeshProUGUI overText;
+    [SerializeField] private GameObject confirmExitPanel;
     [Header("Others")]
     [SerializeField] private PlayerInventory playerInventory;
     public bool PanelOpen { get; private set; }
@@ -95,5 +96,19 @@ public class UI_Manager : MonoBehaviour
         {
             overText.transform.position = Input.mousePosition;
         }
+    }
+    public void SwitchConfirmExitPanel(bool state)
+    {
+        if (PanelOpen && state)
+        {
+            return;
+        }
+        PanelOpen = state;
+        confirmExitPanel.SetActive(state);
+        SwitchHUD(!state);
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }
