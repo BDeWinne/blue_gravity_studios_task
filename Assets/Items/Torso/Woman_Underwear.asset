@@ -15,3 +15,5 @@ MonoBehaviour:
   itemName: Woman Underwear
   icon: {fileID: 538635464, guid: 34d792294d46ba540b2a1db9b98ca7a6, type: 3}
   price: 10
+  itemType: 0
+  clothId: 3

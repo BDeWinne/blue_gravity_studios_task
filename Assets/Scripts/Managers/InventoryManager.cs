@@ -5,15 +5,61 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    [SerializeField] private GameObject inventroyCapsule;
+    public static InventoryManager Instance;
+    [SerializeField] private List<InventoryCapsule> inventroyCapsule;
     [SerializeField] private PlayerInventory playerInventory;
+    [SerializeField] private Image outfitCapsule, hatCapsule;
+    private Color fullWhite = new Color(255, 255, 255, 255);
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    void Start()
+    {
+        outfitCapsule.sprite = playerInventory.Items[0].icon;
+    }
     public void DisplayItemsOnInventory()
     {
-        for (int i = 0; i < playerInventory.items.Count; i++)
+        for (int i = 0; i < playerInventory.Items.Count; i++)
         {
-            Image itemImg = inventroyCapsule.transform.GetChild(0).GetComponent<Image>();
-            itemImg.sprite = playerInventory.items[i].icon;
-            itemImg.color = new Color(255, 255, 255, 255);
+            inventroyCapsule[i].item = playerInventory.Items[i];
+            Image itemImg = inventroyCapsule[i].transform.GetChild(0).GetComponent<Image>();
+            itemImg.sprite = playerInventory.Items[i].icon;
+            itemImg.color = fullWhite;
+
+            Button btn = inventroyCapsule[i].GetComponent<Button>();
+            SetInvCapsuleListener(btn, i);
+            btn.interactable = true;
+        }
+    }
+    void SetInvCapsuleListener(Button btn, int index)
+    {
+        btn.onClick.AddListener(() => { inventroyCapsule[index].SelectItem(); });
+    }
+    public void SelectedItem(Item item)
+    {
+        switch (item.itemType)
+        {
+            case ItemType.Outfit:
+                playerInventory.SetOutfit(item);
+                outfitCapsule.sprite = item.icon;
+                break;
+            case ItemType.Hair:
+                playerInventory.SetHair(item);
+
+                break;
+            case ItemType.Hat:
+                playerInventory.SetHat(item);
+                hatCapsule.sprite = item.icon;
+                hatCapsule.color = fullWhite;
+                break;
         }
     }
 }

@@ -23,4 +23,11 @@ public class HairController : MonoBehaviour
     {
         spriteRenderer.color = hairColor;
     }
+    public void SetClothId(int id)
+    {
+        if (id > 0 && id <= 1)
+        {
+            clothId = id;
+        }
+    }
 }

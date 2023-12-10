@@ -20,4 +20,11 @@ public class HatController : MonoBehaviour
             spriteRenderer.sprite = ClothesManager.Instance.hatList[id].clothList[ClothesManager.Instance.idPos];
         }
     }
+    public void SetClothId(int id)
+    {
+        if (id > 0 && id <= 2)
+        {
+            clothId = id;
+        }
+    }
 }

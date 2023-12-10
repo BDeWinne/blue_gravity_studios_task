@@ -17,4 +17,11 @@ public class TorsoController : MonoBehaviour
     {
         spriteRenderer.sprite = ClothesManager.Instance.torsoList[id].clothList[ClothesManager.Instance.idPos];
     }
+    public void SetClothId(int id)
+    {
+        if (id > 0 && id <= 3)
+        {
+            clothId = id;
+        }
+    }
 }

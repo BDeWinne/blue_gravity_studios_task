@@ -15,3 +15,5 @@ MonoBehaviour:
   itemName: Mage Hat
   icon: {fileID: -1629098463, guid: 56832544eda272a42ac0f1b919c2b2e1, type: 3}
   price: 100
+  itemType: 1
+  clothId: 1

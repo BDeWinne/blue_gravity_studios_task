@@ -15,3 +15,5 @@ MonoBehaviour:
   itemName: Magic Egg
   icon: {fileID: 21300000, guid: e0c7d5a920e98fd47a926292adc0bec7, type: 3}
   price: 800
+  itemType: 3
+  clothId: -1

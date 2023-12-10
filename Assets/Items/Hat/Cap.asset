@@ -15,3 +15,5 @@ MonoBehaviour:
   itemName: Cap
   icon: {fileID: 1797416408, guid: 416e1bd932186f6459522866e7bfef2c, type: 3}
   price: 80
+  itemType: 1
+  clothId: 0

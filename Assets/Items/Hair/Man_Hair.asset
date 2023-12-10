@@ -15,3 +15,5 @@ MonoBehaviour:
   itemName: Man Hair
   icon: {fileID: 963206372, guid: 7be82833b0acbea4b93fad45c0bf5669, type: 3}
   price: 40
+  itemType: 2
+  clothId: 1

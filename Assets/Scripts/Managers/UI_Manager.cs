@@ -7,6 +7,7 @@ public class UI_Manager : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private GameObject hud;
     [SerializeField] private TextMeshProUGUI[] coinTexts;
+    [SerializeField] private TextMeshProUGUI inventoryText;
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private GameObject dialogPanel;
     [SerializeField] private GameObject tradePanel;
@@ -68,5 +69,9 @@ public class UI_Manager : MonoBehaviour
         {
             coinTexts[i].text = playerInventory.coins.ToString();
         }
+    }
+    public void UpdateInventoryCapacityUI()
+    {
+        inventoryText.text = string.Concat(playerInventory.Items.Count, "/", playerInventory.maxInventorySpace);
     }
 }

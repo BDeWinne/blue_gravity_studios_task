@@ -15,3 +15,5 @@ MonoBehaviour:
   itemName: Diamond Armor
   icon: {fileID: 1143040527, guid: 4b3a4733186d89848b12f4d28e4513dd, type: 3}
   price: 300
+  itemType: 0
+  clothId: 2

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
@@ -21,7 +20,9 @@ public class PlayerInteraction : MonoBehaviour
     }
     void OpenInventory()
     {
+        UI_Manager.Instance.UpdateInventoryCapacityUI();
         UI_Manager.Instance.SwitchInventory(true);
+        InventoryManager.Instance.DisplayItemsOnInventory();
     }
     void TryInteract()
     {
