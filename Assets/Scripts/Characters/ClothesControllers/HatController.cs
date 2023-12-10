@@ -22,9 +22,10 @@ public class HatController : MonoBehaviour
     }
     public void SetClothId(int id)
     {
-        if (id > 0 && id <= 2)
+        if (id >= 0 && id <= 2)
         {
             clothId = id;
+            SetCloth(id);
         }
     }
 }

@@ -10,6 +10,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private PlayerInventory playerInventory;
     [SerializeField] private Image outfitCapsule, hatCapsule;
     private Color fullWhite = new Color(255, 255, 255, 255);
+    private Color invisibleWhite = new Color(255, 255, 255, 0);
     void Awake()
     {
         if (Instance == null)
@@ -37,6 +38,22 @@ public class InventoryManager : MonoBehaviour
             Button btn = inventroyCapsule[i].GetComponent<Button>();
             SetInvCapsuleListener(btn, i);
             btn.interactable = true;
+        }
+    }
+    public void CleanItemsOnInventory()
+    {
+        for (int i = 0; i < inventroyCapsule.Count; i++)
+        {
+            if (inventroyCapsule[i].item != null)
+            {
+                inventroyCapsule[i].item = null;
+                Image itemImg = inventroyCapsule[i].transform.GetChild(0).GetComponent<Image>();
+                itemImg.color = invisibleWhite;
+
+                Button btn = inventroyCapsule[i].GetComponent<Button>();
+                btn.onClick.RemoveAllListeners();
+                btn.interactable = false;
+            }
         }
     }
     void SetInvCapsuleListener(Button btn, int index)

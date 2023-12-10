@@ -11,6 +11,7 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private GameObject dialogPanel;
     [SerializeField] private GameObject tradePanel;
+    [SerializeField] private TextMeshProUGUI overText;
     [Header("Others")]
     [SerializeField] private PlayerInventory playerInventory;
     private bool panelOpen = false;
@@ -29,6 +30,10 @@ public class UI_Manager : MonoBehaviour
     void Start()
     {
         UpdateCoinsUI();
+    }
+    void Update()
+    {
+        MoveOverText();
     }
     public void SwitchInventory(bool state)
     {
@@ -73,5 +78,17 @@ public class UI_Manager : MonoBehaviour
     public void UpdateInventoryCapacityUI()
     {
         inventoryText.text = string.Concat(playerInventory.Items.Count, "/", playerInventory.maxInventorySpace);
+    }
+    public void SwitchOverText(string text, bool state)
+    {
+        overText.gameObject.SetActive(state);
+        overText.text = text;
+    }
+    void MoveOverText()
+    {
+        if (overText.gameObject.activeSelf)
+        {
+            overText.transform.position = Input.mousePosition;
+        }
     }
 }

@@ -25,9 +25,10 @@ public class HairController : MonoBehaviour
     }
     public void SetClothId(int id)
     {
-        if (id > 0 && id <= 1)
+        if (id >= 0 && id <= 1)
         {
             clothId = id;
+            SetCloth(id);
         }
     }
 }

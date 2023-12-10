@@ -19,9 +19,10 @@ public class TorsoController : MonoBehaviour
     }
     public void SetClothId(int id)
     {
-        if (id > 0 && id <= 3)
+        if (id >= 0 && id <= 3)
         {
             clothId = id;
+            SetCloth(id);
         }
     }
 }
