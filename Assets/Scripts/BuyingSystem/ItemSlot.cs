@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class ItemSlot : MonoBehaviour
 {
     [SerializeField] private Item item;
-    [SerializeField] Image iconRenderer;
-    [SerializeField] TextMeshProUGUI nameTxt, priceTxt;
-    Button btn;
+    [SerializeField] private Image iconRenderer;
+    [SerializeField] private TextMeshProUGUI nameTxt, priceTxt;
+    [SerializeField] private Button btn;
+
     public void FillItemSlotData(Item item)
     {
         iconRenderer.sprite = item.icon;
@@ -19,10 +20,11 @@ public class ItemSlot : MonoBehaviour
     }
     public void SetSlotForBuy()
     {
-        btn = GetComponent<Button>();
+        btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(BuyItem);
     }
-    void BuyItem()
+
+    private void BuyItem()
     {
         if (TradePanelManager.Instance.PlayerInventory.coins > item.price)
         {
@@ -34,10 +36,11 @@ public class ItemSlot : MonoBehaviour
 
     public void SetSlotForSell()
     {
-        btn = GetComponent<Button>();
+        btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(SellItem);
     }
-    void SellItem()
+
+    private void SellItem()
     {
         TradePanelManager.Instance.ItemSold(item);
         DestroySlot();

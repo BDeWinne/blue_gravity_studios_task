@@ -3,7 +3,8 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     private Animator animator;
-    void Start()
+
+    private void Start()
     {
         animator = GetComponent<Animator>();
     }
@@ -15,7 +16,8 @@ public class PlayerAnimation : MonoBehaviour
         bool isRunning = movement.x != 0 || movement.y != 0;
         animator.SetBool("IsRunning", isRunning);
     }
-    void UpdateSpriteIdPosition(AnimationEvent evt)
+
+    private void UpdateSpriteIdPosition(AnimationEvent evt)
     {
         if (evt.animatorClipInfo.weight > 0.5f)
         {

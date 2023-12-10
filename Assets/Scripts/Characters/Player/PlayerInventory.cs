@@ -8,10 +8,11 @@ public class PlayerInventory : MonoBehaviour
     public int maxInventorySpace { get; private set; } = 20;
     [SerializeField] private List<Item> items;
     public List<Item> Items => items;
-    private TorsoController torsoController;
-    private HairController hairController;
-    private HatController hatController;
-    void Start()
+    public TorsoController torsoController { get; private set; }
+    public HairController hairController { get; private set; }
+    public HatController hatController { get; private set; }
+
+    private void Start()
     {
         torsoController = GetComponentInChildren<TorsoController>();
         hairController = GetComponentInChildren<HairController>();

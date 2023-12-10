@@ -520,6 +520,7 @@ MonoBehaviour:
   iconRenderer: {fileID: 5395030900138768493}
   nameTxt: {fileID: 5395030900755698297}
   priceTxt: {fileID: 5395030902089959423}
+  btn: {fileID: 5579259522386408610}
 --- !u!114 &5579259522386408610
 MonoBehaviour:
   m_ObjectHideFlags: 0

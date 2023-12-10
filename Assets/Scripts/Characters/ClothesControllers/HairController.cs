@@ -1,34 +1,19 @@
 using UnityEngine;
 
-public class HairController : MonoBehaviour
+public class HairController : BaseController
 {
-    [Range(0, 1)][SerializeField] private int clothId;
-    SpriteRenderer spriteRenderer;
-    [SerializeField] Color hairColor;
-    void Start()
+    [SerializeField] private Color hairColor;
+    protected override void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        if (transform.parent.tag == "Player")
-        {
-            ClothesManager.Instance.idPosUpdated.AddListener(() => { SetCloth(clothId); });
-        }
-        SetCloth(clothId);
+        base.Start();
         SetColor();
     }
-    public void SetCloth(int id)
+    public override void SetCloth(int id)
     {
         spriteRenderer.sprite = ClothesManager.Instance.hairList[id].clothList[ClothesManager.Instance.idPos];
     }
     public void SetColor()
     {
         spriteRenderer.color = hairColor;
-    }
-    public void SetClothId(int id)
-    {
-        if (id >= 0 && id <= 1)
-        {
-            clothId = id;
-            SetCloth(id);
-        }
     }
 }

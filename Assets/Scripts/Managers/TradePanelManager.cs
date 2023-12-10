@@ -13,7 +13,8 @@ public class TradePanelManager : MonoBehaviour
     public PlayerInventory PlayerInventory => playerInventory;
     [SerializeField] private List<ItemSlot> playerItemSlots = new List<ItemSlot>();
     [SerializeField] private List<ItemSlot> traderItemSlots = new List<ItemSlot>();
-    void Awake()
+
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -41,6 +42,7 @@ public class TradePanelManager : MonoBehaviour
         playerInventory.ModifyCoinsCount(-item.price);
         playerInventory.AddItem(item);
         currentNpc.RemoveItem(item);
+        CheckForEmptySlots();
         CreateSlot(playerTradeScreenTrs, playerItemSlots, playerInventory.Items.Count - 1, item, setSlotForSell: true);
     }
     public void ItemSold(Item item)
@@ -48,9 +50,45 @@ public class TradePanelManager : MonoBehaviour
         playerInventory.ModifyCoinsCount(item.price);
         playerInventory.RemoveItem(item);
         currentNpc.AddItem(item);
+        CheckForEmptySlots();
         CreateSlot(traderTradeScreenTrs, traderItemSlots, currentNpc.items.Count - 1, item, setSlotForBuy: true);
+        UnequipSoldItem(item);
     }
-    void CreateSlot(Transform parent, List<ItemSlot> listToAdd, int index, Item item, bool setSlotForBuy = false, bool setSlotForSell = false)
+
+    public void CheckForEmptySlots()
+    {
+        for (int i = 0; i < playerItemSlots.Count; i++)
+        {
+            if (playerItemSlots[i] == null)
+            {
+                playerItemSlots.RemoveAt(i);
+            }
+        }
+        for (int i = 0; i < traderItemSlots.Count; i++)
+        {
+            if (traderItemSlots[i] == null)
+            {
+                traderItemSlots.RemoveAt(i);
+            }
+        }
+    }
+    void UnequipSoldItem(Item item)
+    {
+        switch (item.itemType)
+        {
+            case ItemType.Outfit:
+                playerInventory.torsoController.CheckIfWearing(item.clothId);
+                break;
+            case ItemType.Hat:
+                playerInventory.hatController.CheckIfWearing(item.clothId);
+                break;
+            case ItemType.Hair:
+                playerInventory.hairController.CheckIfWearing(item.clothId);
+                break;
+
+        }
+    }
+    private void CreateSlot(Transform parent, List<ItemSlot> listToAdd, int index, Item item, bool setSlotForBuy = false, bool setSlotForSell = false)
     {
         GameObject slot = Instantiate(itemSlotPrefab, parent);
         listToAdd.Add(slot.GetComponent<ItemSlot>());

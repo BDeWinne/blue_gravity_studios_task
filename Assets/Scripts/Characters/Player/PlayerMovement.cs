@@ -8,18 +8,18 @@ public class PlayerMovement : MonoBehaviour
     private PlayerAnimation playerAnimation;
     private Vector2 lastDirection;
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         playerAnimation = GetComponent<PlayerAnimation>();
     }
 
-    void Update()
+    private void Update()
     {
         Move();
     }
 
-    void Move()
+    private void Move()
     {
         if (UI_Manager.Instance.PanelOpen)
         {

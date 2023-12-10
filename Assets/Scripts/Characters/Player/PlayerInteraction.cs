@@ -3,11 +3,13 @@ using UnityEngine;
 public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField] private float interactionRange = 2f;
-    void Update()
+
+    private void Update()
     {
         HandleInputs();
     }
-    void HandleInputs()
+
+    private void HandleInputs()
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -18,13 +20,15 @@ public class PlayerInteraction : MonoBehaviour
             TryInteract();
         }
     }
-    void OpenInventory()
+
+    private void OpenInventory()
     {
         UI_Manager.Instance.UpdateInventoryCapacityUI();
         UI_Manager.Instance.SwitchInventory(true);
         InventoryManager.Instance.DisplayItemsOnInventory();
     }
-    void TryInteract()
+
+    private void TryInteract()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, interactionRange);
         foreach (Collider2D collider in colliders)

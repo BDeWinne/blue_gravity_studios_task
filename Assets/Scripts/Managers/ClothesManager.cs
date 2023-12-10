@@ -11,7 +11,8 @@ public class ClothesManager : MonoBehaviour
     [SerializeField] public List<Cloth> hatList = new List<Cloth>();
     public int idPos { get; private set; } = 0;
     public UnityEvent idPosUpdated;
-    void Awake()
+
+    private void Awake()
     {
         if (Instance == null)
         {

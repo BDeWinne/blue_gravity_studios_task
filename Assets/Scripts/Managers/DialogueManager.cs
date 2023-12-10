@@ -12,9 +12,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject optionsBtns;
     [SerializeField] private Button acceptBtn;
     private int currentLine = 0;
-    Dialogue dialogue;
+    private Dialogue dialogue;
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -43,7 +43,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    async UniTask TypeDialogue(string line)
+    private async UniTask TypeDialogue(string line)
     {
         nextBtn.gameObject.SetActive(false);
         dialogueText.text = "";
@@ -69,7 +69,8 @@ public class DialogueManager : MonoBehaviour
         optionsBtns.SetActive(false);
         dialogue = null;
     }
-    void ActivateOptionsBtns()
+
+    private void ActivateOptionsBtns()
     {
         optionsBtns.SetActive(true);
     }

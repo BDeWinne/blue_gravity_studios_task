@@ -15,7 +15,8 @@ public class UI_Manager : MonoBehaviour
     [Header("Others")]
     [SerializeField] private PlayerInventory playerInventory;
     public bool PanelOpen { get; private set; }
-    void Awake()
+
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -27,11 +28,13 @@ public class UI_Manager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    void Start()
+
+    private void Start()
     {
         UpdateCoinsUI();
     }
-    void Update()
+
+    private void Update()
     {
         MoveOverText();
     }
@@ -55,7 +58,8 @@ public class UI_Manager : MonoBehaviour
         tradePanel.SetActive(state);
         SwitchHUD(!state);
     }
-    void SwitchHUD(bool state)
+
+    private void SwitchHUD(bool state)
     {
         hud.SetActive(state);
     }
@@ -84,7 +88,8 @@ public class UI_Manager : MonoBehaviour
         overText.gameObject.SetActive(state);
         overText.text = text;
     }
-    void MoveOverText()
+
+    private void MoveOverText()
     {
         if (overText.gameObject.activeSelf)
         {

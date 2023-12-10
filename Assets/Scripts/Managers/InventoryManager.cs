@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,11 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager Instance;
     [SerializeField] private List<InventoryCapsule> inventroyCapsule;
     [SerializeField] private PlayerInventory playerInventory;
-    [SerializeField] private Image outfitCapsule, hatCapsule;
+    [SerializeField] private Image outfitCapsule, hatCapsule, hairCapsule;
     private Color fullWhite = new Color(255, 255, 255, 255);
     private Color invisibleWhite = new Color(255, 255, 255, 0);
-    void Awake()
+
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -22,9 +24,11 @@ public class InventoryManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    void Start()
+
+    private void Start()
     {
         outfitCapsule.sprite = playerInventory.Items[0].icon;
+        hairCapsule.sprite = playerInventory.Items[1].icon;
     }
     public void DisplayItemsOnInventory()
     {
@@ -55,8 +59,16 @@ public class InventoryManager : MonoBehaviour
                 btn.interactable = false;
             }
         }
+        CleanEquipedItems();
     }
-    void SetInvCapsuleListener(Button btn, int index)
+    void CleanEquipedItems()
+    {
+        outfitCapsule.color = invisibleWhite;
+        hatCapsule.color = invisibleWhite;
+        hairCapsule.color = invisibleWhite;
+    }
+
+    private void SetInvCapsuleListener(Button btn, int index)
     {
         btn.onClick.AddListener(() => { inventroyCapsule[index].SelectItem(); });
     }
@@ -65,18 +77,20 @@ public class InventoryManager : MonoBehaviour
         switch (item.itemType)
         {
             case ItemType.Outfit:
-                playerInventory.SetOutfit(item);
-                outfitCapsule.sprite = item.icon;
+                SetUpEquipment(item, outfitCapsule, () => { playerInventory.SetOutfit(item); });
                 break;
             case ItemType.Hair:
-                playerInventory.SetHair(item);
-
+                SetUpEquipment(item, hairCapsule, () => { playerInventory.SetHair(item); });
                 break;
             case ItemType.Hat:
-                playerInventory.SetHat(item);
-                hatCapsule.sprite = item.icon;
-                hatCapsule.color = fullWhite;
+                SetUpEquipment(item, hatCapsule, () => { playerInventory.SetHat(item); });
                 break;
         }
+    }
+    void SetUpEquipment(Item itemToSet, Image targetImg, Action func)
+    {
+        func.Invoke();
+        targetImg.sprite = itemToSet.icon;
+        targetImg.color = fullWhite;
     }
 }
