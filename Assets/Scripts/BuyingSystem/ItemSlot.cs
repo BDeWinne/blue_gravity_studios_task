@@ -26,7 +26,7 @@ public class ItemSlot : MonoBehaviour
 
     private void BuyItem()
     {
-        if (TradePanelManager.Instance.PlayerInventory.coins > item.price)
+        if (TradePanelManager.Instance.PlayerInventory.coins >= item.price)
         {
             TradePanelManager.Instance.ItemBought(item);
             DestroySlot();
